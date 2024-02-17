@@ -33,10 +33,6 @@
     group: www-data
     mode: 0644
 
-- name: Clear cache
-  become: true
-  command: rm -r /var/www/cache/*
-
 - name: Warmup cache
   become_user: www-data
   command: "chdir=/var/www php bin/console cache:warmup --env=prod"
