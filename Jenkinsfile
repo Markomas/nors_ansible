@@ -15,7 +15,7 @@ pipeline {
         stage('Setup haproxy') {
             steps {
                 ansiblePlaybook(
-                        playbook: 'haproxy/haproxy.yml',
+                        playbook: 'roles/haproxy/playbook.yml',
                         inventory: 'nors_news_ansible_inventory.yml',
                         credentialsId: 'jenkins_agent',
                         colorized: true)
