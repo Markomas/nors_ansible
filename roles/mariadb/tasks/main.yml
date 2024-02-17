@@ -35,7 +35,6 @@
     priv: 'news.*:ALL'
     state: present
     host: "192.168.1.185"
-  when: DATABASE_MARKOM_PASSWORD is defined
 
 - name: Change mysql to allow remote connections
   become: true
