@@ -1,0 +1,47 @@
+- name: Install mariadb server
+  become: true
+  ansible.builtin.apt:
+    name: mariadb-server
+    state: present
+
+- name: Make sure pip is present
+  become: true
+  ansible.builtin.apt:
+    name: python3-pip
+    state: present
+
+- name: Make sure pymysql is present
+  become: true
+  ansible.builtin.apt:
+    name: python3-pymysql
+    state: present
+
+- name: Add news users to mariadb server
+  become: true
+  ansible.builtin.mysql_user:
+    login_unix_socket: /run/mysqld/mysqld.sock
+    name: news
+    password: "{{ lookup('ansible.builtin.env', 'DATABASE_NEWS_PASSWORD') }}"
+    priv: 'news.*:ALL'
+    state: present
+    host: "{{ groups['prod-app']|join('/') }}"
+
+- name: Add markom users to mariadb server
+  become: true
+  ansible.builtin.mysql_user:
+    login_unix_socket: /run/mysqld/mysqld.sock
+    name: markom
+    password: "{{ lookup('ansible.builtin.env', 'DATABASE_MARKOM_PASSWORD') }}"
+    priv: 'news.*:ALL'
+    state: present
+    host: "192.168.1.185"
+  when: DATABASE_MARKOM_PASSWORD is defined
+
+- name: Change mysql to allow remote connections
+  become: true
+  lineinfile:
+    path: /etc/mysql/mariadb.conf.d/50-server.cnf
+    regexp: '^bind-address'
+    line: 'bind-address = 0.0.0.0'
+    state: present
+  notify: Restart mariadb server

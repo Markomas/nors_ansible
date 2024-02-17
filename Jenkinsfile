@@ -12,13 +12,36 @@ pipeline {
             }
         }
 
-        stage('Setup haproxy') {
+        stage('Setup loadbalancer') {
             steps {
                 ansiblePlaybook(
-                        playbook: 'roles/haproxy/playbook.yml',
+                        playbook: 'loadbalancer.yml',
                         inventory: 'nors_news_ansible_inventory.yml',
                         credentialsId: 'jenkins_agent',
-                        colorized: true)
+                        colorized: true
+                        )
+            }
+        }
+
+        stage('Setup database') {
+            steps {
+                ansiblePlaybook(
+                        playbook: 'database.yml',
+                        inventory: 'nors_news_ansible_inventory.yml',
+                        credentialsId: 'jenkins_agent',
+                        colorized: true
+                        )
+            }
+        }
+
+        setup('Web server') {
+            steps {
+                ansiblePlaybook(
+                    playbook: 'webserver.yml',
+                    inventory: 'nors_news_ansible_inventory.yml'
+                    credentialsId: 'jenkins_agent'
+                    colorized: true
+                )
             }
         }
     }

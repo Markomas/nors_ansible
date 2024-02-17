@@ -1,0 +1,3 @@
+- hosts: lv-load-balancer
+  roles:
+    - haproxy

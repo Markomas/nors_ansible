@@ -1,0 +1,5 @@
+- name: Install apache/php server
+  become: true
+  ansible.builtin.apt:
+    name: php
+    state: present
