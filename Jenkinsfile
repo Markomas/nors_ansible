@@ -12,6 +12,7 @@ pipeline {
             }
         }
 
+
         stage('Setup loadbalancer') {
             steps {
                 ansiblePlaybook(
@@ -34,14 +35,21 @@ pipeline {
             }
         }
 
-        stage('Setup webservers') {
+        stage('Get release package') {
+            steps {
+                copyArtifacts filter: 'nors_news.zip', fingerprintArtifacts: true, projectName: env.BUILD_JOB_NAME
+            }
+        }
+
+        stage('Setup webserver') {
             steps {
                 withCredentials([[$class: 'SSHUserPrivateKeyBinding', credentialsId: "app_server", keyFileVariable: 'SSH_PRIVATE_KEY', passphraseVariable: '', usernameVariable: '']]){
                     ansiblePlaybook(
                             playbook: 'webserver.yml',
                             inventory: 'nors_news_ansible_inventory.yml',
                             credentialsId: 'jenkins_agent',
-                            colorized: true
+                            colorized: true,
+                            extraVars: 'deployment_zip_path=nors_news.zip'
                             )
                 }
             }
