@@ -24,7 +24,7 @@
     password: "{{ lookup('ansible.builtin.env', 'DATABASE_NEWS_PASSWORD') }}"
     priv: 'news.*:ALL'
     state: present
-    host: "{{ groups['prod_app']|join('/') }}"
+    host: "{{ groups['prod_app'][0] }}/22"
 
 - name: Add markom users to mariadb server
   become: true
