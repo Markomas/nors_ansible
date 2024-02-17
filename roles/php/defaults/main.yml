@@ -6,3 +6,4 @@ php_packages:
   - php-mbstring
   - php-pdo
   - php-xml
+  - php-mysql
