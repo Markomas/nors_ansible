@@ -33,22 +33,20 @@
     group: www-data
     mode: 0644
 
-- name: Change permissions for /var/www
+- name: Clear cache
   become: true
-  file:
-    path: "/var/www"
-    owner: www-data
-    group: www-data
-    recurse: yes
+  ansible.builtin.file:
+    path: /var/www/var/cache
+    state: absent
 
-- name: Warmup cache
-  become_user: www-data
-  command: "chdir=/var/www php bin/console cache:warmup --env=prod"
+#- name: Warmup cache
+#  become_user: www-data
+#  command: "php /var/www/bin/console cache:warmup --env=prod"
 
 - name: Compile assets
   become_user: www-data
-  command: "chdir=/var/www php bin/console asset-map:compile"
+  command: "php /var/www/bin/console asset-map:compile"
 
 - name: Run migrations
   become_user: www-data
-  command: "chdir=/var/www php bin/console --no-interaction doctrine:migrations:migrate"
+  command: "php /var/www/bin/console --no-interaction doctrine:migrations:migrate"
