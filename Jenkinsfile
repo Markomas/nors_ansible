@@ -43,15 +43,16 @@ pipeline {
 
         stage('Setup webserver') {
             steps {
-                withCredentials([[$class: 'SSHUserPrivateKeyBinding', credentialsId: "app_server", keyFileVariable: 'SSH_PRIVATE_KEY', passphraseVariable: '', usernameVariable: '']]) {
-                    ansiblePlaybook('webserver.yml') {
-                            inventoryPath('nors_news_ansible_inventory.yml')
-                            credentialsId('jenkins_agent')
-                            colorizedOutput(true)
-                            extraVars {
-                                extraVar("deployment_zip_path", "nors_news.zip", false)
-                            }
-                    }
+                withCredentials([[$class: 'SSHUserPrivateKeyBinding', credentialsId: "app_server", keyFileVariable: 'SSH_PRIVATE_KEY', passphraseVariable: '', usernameVariable: '']]){
+                    ansiblePlaybook(
+                            playbook: 'webserver.yml',
+                            inventory: 'nors_news_ansible_inventory.yml',
+                            credentialsId: 'jenkins_agent',
+                            colorized: true,
+                            extraVars: [
+                                deployment_zip_path: 'nors_news.zip'
+                                ]
+                            )
                 }
             }
         }
