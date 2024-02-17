@@ -1,0 +1,32 @@
+global
+        # stats socket <bind> level <admin|operator|user>
+        stats socket /var/run/haproxy.sock mode 600 level admin
+        stats timeout 2m
+
+defaults
+  mode http
+  timeout client 10s
+  timeout connect 5s
+  timeout server 10s
+  timeout http-request 10s
+
+frontend myfrontend
+  bind 0.0.0.0:80
+  use_backend %[str(active),map(/bluegreen.map)]
+
+backend lv_app_blue
+    {% for ip in groups['blue-lv-app'] %}
+    server server{{loop.index}} {{ ip }}:80 check
+    {% endfor %}
+
+
+backend lv_app_green
+    {% for ip in groups['green-lv-app'] %}
+    server server{{loop.index}} {{ ip }}:80 check
+    {% endfor %}
+
+listen stats
+    bind *:1936
+    stats enable
+    stats uri /
+    stats hide-version
