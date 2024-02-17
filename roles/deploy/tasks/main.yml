@@ -32,3 +32,7 @@
     owner: www-data
     group: www-data
     mode: 0644
+
+- name: Run migrations
+  become_user: www-data
+  command: "chdir=/var/www php bin/console doctrine:migrations:migrate"
