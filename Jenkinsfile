@@ -51,6 +51,7 @@ pipeline {
                             extraVars {
                                 extraVar("deployment_zip_path", "nors_news.zip", false)
                             }
+                    }
                 }
             }
         }
