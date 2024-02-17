@@ -2,6 +2,7 @@
   hosts: lv-load-balancer
   tasks:
     - name: Install haproxy
+      become: true
       ansible.builtin.apt:
         name: haproxy
         state: present
