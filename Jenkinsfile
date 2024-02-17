@@ -34,6 +34,16 @@ pipeline {
             }
         }
 
+        stage('Setup webservers') {
+            steps {
+                ansiblePlaybook(
+                        playbook: 'webservers.yml',
+                        inventory: 'nors_news_ansible_inventory.yml',
+                        credentialsId: 'jenkins_agent',
+                        colorized: true
+                        )
+            }
+        }
 
     }
 }
