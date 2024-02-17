@@ -1,3 +1,0 @@
-- name: Setup servers
-  tasks:
-    - include_tasks: haproxy/haproxy.yml
