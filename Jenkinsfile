@@ -13,11 +13,13 @@ pipeline {
         }
 
         stage('Run ansible') {
-            ansiblePlaybook(
-                    playbook: 'playbook.yml',
-                    inventory: 'nors_news_ansible_inventory.yml',
-                    credentialsId: 'jenkins_agent',
-                    colorized: true)
+            steps {
+                ansiblePlaybook(
+                        playbook: 'playbook.yml',
+                        inventory: 'nors_news_ansible_inventory.yml',
+                        credentialsId: 'jenkins_agent',
+                        colorized: true)
+            }
         }
     }
 }
