@@ -38,7 +38,7 @@
   command: rm -r /var/www/cache/*
 
 - name: Warmup cache
-  become: true
+  become_user: www-data
   command: "chdir=/var/www php bin/console cache:warmup --env=prod"
 
 - name: Compile assets
