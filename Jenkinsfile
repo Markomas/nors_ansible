@@ -37,14 +37,13 @@ pipeline {
         stage('Setup webservers') {
             steps {
                 withCredentials([[$class: 'SSHUserPrivateKeyBinding', credentialsId: "app_server", keyFileVariable: 'SSH_PRIVATE_KEY', passphraseVariable: '', usernameVariable: '']]){
-                    echo "this is a string ${SSH_PRIVATE_KEY}";
+                    ansiblePlaybook(
+                            playbook: 'webserver.yml',
+                            inventory: 'nors_news_ansible_inventory.yml',
+                            credentialsId: 'jenkins_agent',
+                            colorized: true
+                            )
                 }
-                ansiblePlaybook(
-                        playbook: 'webserver.yml',
-                        inventory: 'nors_news_ansible_inventory.yml',
-                        credentialsId: 'jenkins_agent',
-                        colorized: true
-                        )
             }
         }
 
