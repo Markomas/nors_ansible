@@ -1,5 +1,5 @@
-- name: Install apache/php server
+- name: Install php
   become: true
   ansible.builtin.apt:
-    name: php
-    state: present
+    name: "{{ php_packages }}"
+    state: latest

@@ -1,8 +1,5 @@
-#- hosts: prod_app
-#  roles:
-#    - php
-#    - nginx
-
 - hosts: blue_lv_app
   roles:
+    - php
+    - nginx
     - deploy

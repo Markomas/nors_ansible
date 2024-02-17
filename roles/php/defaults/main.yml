@@ -2,9 +2,7 @@ php_packages:
   - php-fpm
   - php-cli
   - php-common
-  - php-devel
   - php-gd
   - php-mbstring
   - php-pdo
-  - php-pecl-apcu
   - php-xml
