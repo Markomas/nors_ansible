@@ -1,3 +1,4 @@
 - hosts: prod_app
   roles:
     - php
+    - nginx

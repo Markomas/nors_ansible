@@ -1,0 +1,23 @@
+- include_tasks: remove_apache.yml
+
+- name: Install nginx
+  become: true
+  ansible.builtin.apt:
+    name: nginx
+    state: latest
+
+- name: Remove existing nginx default configuration
+  become: true
+  ansible.builtin.file:
+    path: /etc/nginx/sites-enabled/default
+    state: absent
+  notify:
+    - Reload nginx service
+
+- name: Add configuration for site
+  become: true
+  ansible.builtin.template:
+    src: templates/nginx.conf.j2
+    dest: /etc/nginx/sites-enabled/default
+  notify:
+    - Reload nginx service

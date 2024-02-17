@@ -1,0 +1,14 @@
+- name: Remove apache
+  become: true
+  ansible.builtin.apt:
+    name: apache2*
+    state: absent
+    purge: true
+
+- name: Remove libapache2-mod-php8.2
+  become: true
+  ansible.builtin.apt:
+    name: libapache2-mod-php*
+    state: absent
+    purge: true
+
