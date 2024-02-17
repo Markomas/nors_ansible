@@ -15,13 +15,13 @@ frontend myfrontend
   use_backend %[str(active),map(/bluegreen.map)]
 
 backend lv_app_blue
-    {% for ip in groups['blue-lv-app'] %}
+    {% for ip in groups['blue_lv_app'] %}
     server server{{loop.index}} {{ ip }}:80 check
     {% endfor %}
 
 
 backend lv_app_green
-    {% for ip in groups['green-lv-app'] %}
+    {% for ip in groups['green_lv_app'] %}
     server server{{loop.index}} {{ ip }}:80 check
     {% endfor %}
 
