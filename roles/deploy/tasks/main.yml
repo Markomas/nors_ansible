@@ -35,4 +35,4 @@
 
 - name: Run migrations
   become_user: www-data
-  command: "chdir=/var/www php bin/console doctrine:migrations:migrate --force"
+  command: "chdir=/var/www php bin/console --no-interaction doctrine:migrations:migrate"
