@@ -33,11 +33,13 @@
     group: www-data
     mode: 0644
 
-- name: Clear cache
+- name: Change permissions for /var/www
   become: true
-  ansible.builtin.file:
-    path: /var/www/var/cache
-    state: absent
+  file:
+    path: "/var/www"
+    owner: www-data
+    group: www-data
+    recurse: yes
 
 - name: Warmup cache
   become_user: www-data
