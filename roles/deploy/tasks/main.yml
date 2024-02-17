@@ -33,6 +33,10 @@
     group: www-data
     mode: 0644
 
+- name: Compile assets
+  become_user: www-data
+  command: "chdir=/var/www php bin/console asset-map:compile"
+
 - name: Run migrations
   become_user: www-data
   command: "chdir=/var/www php bin/console --no-interaction doctrine:migrations:migrate"
