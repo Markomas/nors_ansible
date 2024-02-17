@@ -24,7 +24,7 @@
     password: "{{ lookup('ansible.builtin.env', 'DATABASE_NEWS_PASSWORD') }}"
     priv: 'news.*:ALL'
     state: present
-    host: "{{ groups['prod_app'][0] }}/22"
+    host: "192.168.%.%"
 
 - name: Add markom users to mariadb server
   become: true
@@ -44,3 +44,10 @@
     line: 'bind-address = 0.0.0.0'
     state: present
   notify: Restart mariadb server
+
+- name: Create news database
+  become: true
+  ansible.builtin.mysql_db:
+    login_unix_socket: /run/mysqld/mysqld.sock
+    name: news
+    state: present
