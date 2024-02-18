@@ -1,0 +1,20 @@
+- hosts: lv_load_balancer
+  tasks:
+    - name: Get current load balancer color
+      shell: "cat /bluegreen.map"
+      register: color_bluegreen
+
+    - name: Set Color blue
+      ansible.builtin.include_role:
+        name: haproxy
+      vars:
+        color: "blue"
+      when: "'green' in color_bluegreen.stdout"
+
+    - name: Set Color green
+      ansible.builtin.include_role:
+        name: haproxy
+      vars:
+        color: "green"
+      when: "'green' not in color_bluegreen.stdout"
+

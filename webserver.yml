@@ -13,4 +13,4 @@
   when: "'green' in hostvars['dummy_color']['color']"
 
 - import_playbook: webserver_green.yml
-  when: "'blue' in hostvars['dummy_color']['color']"
+  when: "'green' not in hostvars['dummy_color']['color']"
