@@ -15,6 +15,11 @@
     group: www-data
     mode: 0644
 
+- name: Install unzip zip packages
+  become: true
+  package:
+    name: unzip
+
 - name: Unzip deployment zip archive
   become: true
   unarchive:
