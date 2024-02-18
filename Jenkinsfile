@@ -14,6 +14,9 @@ pipeline {
 
 
         stage('Setup loadbalancer') {
+            when {
+                 expression { params.INFRASTRUCTURE_UPDATE == 'TRUE' }
+            }
             steps {
                 ansiblePlaybook(
                         playbook: 'loadbalancer.yml',
@@ -25,6 +28,9 @@ pipeline {
         }
 
         stage('Setup database') {
+            when {
+                 expression { params.INFRASTRUCTURE_UPDATE == 'TRUE' }
+            }
             steps {
                 ansiblePlaybook(
                         playbook: 'database.yml',
