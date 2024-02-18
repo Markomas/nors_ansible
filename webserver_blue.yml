@@ -1,0 +1,11 @@
+- hosts: blue_lv_app
+  roles:
+    - php
+    - nginx
+    - acl
+    - deploy
+
+- hosts: lv_load_balancer
+  roles:
+    - role: haproxy
+      color: blue

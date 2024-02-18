@@ -19,7 +19,6 @@ backend lv_app_blue
     server server{{loop.index}} {{ ip }}:80 check
     {% endfor %}
 
-
 backend lv_app_green
     {% for ip in groups['green_lv_app'] %}
     server server{{loop.index}} {{ ip }}:80 check

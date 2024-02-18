@@ -1,6 +1,22 @@
-- hosts: blue_lv_app
-  roles:
-    - php
-    - nginx
-    - acl
-    - deploy
+- hosts: lv_load_balancer
+  tasks:
+    - name: Get current load balancer color
+      shell: "cat /bluegreen.map"
+      register: color
+
+    - name: Add dummy host for color
+      add_host:
+        name: dummy_color
+        color: "{{ color.stdout }}"
+
+- import_playbook: webserver_blue.yml
+  when: "'green' in hostvars['dummy_color']['color']"
+
+- import_playbook: webserver_green.yml
+  when: "'blue' in hostvars['dummy_color']['color']"
+
+- hosts: localhost
+  gather_facts: no
+  tasks:
+    - debug:
+        var: hostvars['dummy_color']['color']
