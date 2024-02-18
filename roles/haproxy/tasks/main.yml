@@ -4,17 +4,11 @@
     name: haproxy
     state: present
 
-- name: Register status of /bluegreen.map
-  stat:
-    path: /bluegreen.map
-  register: bluegreen_map
-
 - name: Configure haproxy bluegreen.cfg
   become: true
   ansible.builtin.template:
     src: ../templates/bluegreen.map.j2
     dest: /bluegreen.map
-  when: "not bluegreen_map.stat.exists"
 
 - name: Configure haproxy.cfg
   become: true
