@@ -33,6 +33,14 @@
     group: www-data
     mode: 0644
 
+- name: Change permissions for /var/www
+  become: true
+  file:
+    path: "/var/www"
+    owner: www-data
+    group: www-data
+    recurse: yes
+
 - name: Warmup cache
   become: true
   become_user: www-data
