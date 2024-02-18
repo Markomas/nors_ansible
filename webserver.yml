@@ -3,6 +3,7 @@
     - name: Get current load balancer color
       shell: "cat /bluegreen.map"
       register: color
+      ignore_errors: True
 
     - name: Add dummy host for color
       add_host:
