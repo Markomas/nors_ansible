@@ -9,3 +9,9 @@
   roles:
     - role: haproxy
       color: blue
+
+- hosts: localhost
+  gather_facts: false
+  tasks:
+    - debug:
+        msg: "Now it's blue"

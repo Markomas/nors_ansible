@@ -14,9 +14,3 @@
 
 - import_playbook: webserver_green.yml
   when: "'blue' in hostvars['dummy_color']['color']"
-
-- hosts: localhost
-  gather_facts: no
-  tasks:
-    - debug:
-        var: hostvars['dummy_color']['color']
