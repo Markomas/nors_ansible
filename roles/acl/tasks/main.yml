@@ -1,0 +1,5 @@
+- name: Install acl package
+  become: true
+  apt:
+    name: acl
+    state: present

@@ -33,20 +33,17 @@
     group: www-data
     mode: 0644
 
-- name: Clear cache
+- name: Warmup cache
   become: true
-  ansible.builtin.file:
-    path: /var/www/var/cache
-    state: absent
-
-#- name: Warmup cache
-#  become_user: www-data
-#  command: "php /var/www/bin/console cache:warmup --env=prod"
+  become_user: www-data
+  command: "php /var/www/bin/console cache:warmup --env=prod"
 
 - name: Compile assets
+  become: true
   become_user: www-data
   command: "php /var/www/bin/console asset-map:compile"
 
 - name: Run migrations
+  become: true
   become_user: www-data
   command: "php /var/www/bin/console --no-interaction doctrine:migrations:migrate"

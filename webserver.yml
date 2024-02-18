@@ -2,4 +2,5 @@
   roles:
     - php
     - nginx
+    - acl
     - deploy
