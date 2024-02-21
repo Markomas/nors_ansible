@@ -1,3 +1,19 @@
-- hosts: lv_db
+- hosts:
+    - lv_db
   roles:
     - mariadb
+  vars:
+    master: true
+    database_news_password: "{{ lookup('ansible.builtin.env', 'DATABASE_NEWS_PASSWORD') }}"
+    database_markom_password: "{{ lookup('ansible.builtin.env', 'DATABASE_MARKOM_PASSWORD') }}"
+    database_slave_password: "{{ lookup('ansible.builtin.env', 'DATABASE_SLAVE_PASSWORD') }}"
+
+- hosts:
+    - lv_db_slave
+  roles:
+    - mariadb
+  vars:
+    slave: true
+    database_news_password: "{{ lookup('ansible.builtin.env', 'DATABASE_NEWS_PASSWORD') }}"
+    database_markom_password: "{{ lookup('ansible.builtin.env', 'DATABASE_MARKOM_PASSWORD') }}"
+    database_slave_password: "{{ lookup('ansible.builtin.env', 'DATABASE_SLAVE_PASSWORD') }}"

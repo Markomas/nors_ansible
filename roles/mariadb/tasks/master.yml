@@ -1,0 +1,25 @@
+- name: Add slave user for replication to mariadb server
+  become: true
+  ansible.builtin.mysql_user:
+    login_unix_socket: /run/mysqld/mysqld.sock
+    name: slave
+    password: '{{ database_slave_password }}'
+    priv: '*.*:ALL'
+    state: present
+    host: '{{ database_slave_host }}'
+
+- name: Create news database
+  become: true
+  ansible.builtin.mysql_db:
+    login_unix_socket: /run/mysqld/mysqld.sock
+    name: news
+    state: present
+
+- name: Add 60-as-master.cnf to mariadb
+  become: true
+  ansible.builtin.template:
+    src: 60-as-master.cnf.j2
+    dest: /etc/mysql/mariadb.conf.d/60-as-master.cnf
+    owner: root
+    group: root
+  notify: Restart mariadb server

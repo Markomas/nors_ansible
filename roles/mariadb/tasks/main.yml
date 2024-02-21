@@ -16,25 +16,25 @@
     name: python3-pymysql
     state: present
 
-- name: Add news users to mariadb server
+- name: Add news user to mariadb server
   become: true
   ansible.builtin.mysql_user:
     login_unix_socket: /run/mysqld/mysqld.sock
     name: news
-    password: "{{ lookup('ansible.builtin.env', 'DATABASE_NEWS_PASSWORD') }}"
+    password: '{{ database_news_password }}'
     priv: 'news.*:ALL'
     state: present
-    host: "192.168.%.%"
+    host: '{{ database_news_host }}'
 
-- name: Add markom users to mariadb server
+- name: Add markom user to mariadb server
   become: true
   ansible.builtin.mysql_user:
     login_unix_socket: /run/mysqld/mysqld.sock
     name: markom
-    password: "{{ lookup('ansible.builtin.env', 'DATABASE_MARKOM_PASSWORD') }}"
+    password: '{{ database_markom_password }}'
     priv: '*.*:ALL'
     state: present
-    host: "192.168.1.185"
+    host: '{{ database_markom_host }}'
 
 - name: Change mysql to allow remote connections
   become: true
@@ -45,9 +45,10 @@
     state: present
   notify: Restart mariadb server
 
-- name: Create news database
-  become: true
-  ansible.builtin.mysql_db:
-    login_unix_socket: /run/mysqld/mysqld.sock
-    name: news
-    state: present
+- name: Setup master
+  include_tasks: master.yml
+  when: master
+
+- name: Setup slave
+  include_tasks: slave.yml
+  when: slave
