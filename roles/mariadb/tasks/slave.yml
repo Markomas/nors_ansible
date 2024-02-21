@@ -20,4 +20,5 @@
   become: true
   community.mysql.mysql_replication:
     login_unix_socket: /var/run/mysqld/mysqld.sock
-    mode: startslave
+    mode: startreplica
+    connection_name: primary-1
