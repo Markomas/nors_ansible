@@ -12,7 +12,6 @@ pipeline {
             }
         }
 
-
         stage('Setup loadbalancer') {
             when {
                  expression { params.INFRASTRUCTURE_UPDATE == 'TRUE' }
