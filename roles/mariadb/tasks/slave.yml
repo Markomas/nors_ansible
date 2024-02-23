@@ -7,6 +7,17 @@
     group: root
   notify: Restart mariadb server
 
+- name: Stop server as slave
+  become: true
+  community.mysql.mysql_replication:
+    login_unix_socket: /var/run/mysqld/mysqld.sock
+    mode: getreplica
+  register: replication_status
+
+- name: Debug replication status
+  ansible.builtin.debug:
+    var: replication_status
+
 - name: Set master mariadb server
   become: true
   community.mysql.mysql_replication:
