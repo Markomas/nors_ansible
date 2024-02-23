@@ -14,10 +14,6 @@
     mode: getreplica
   register: replication_status
 
-- name: Debug replication status
-  ansible.builtin.debug:
-    var: replication_status
-
 - name: Set master mariadb server
   become: true
   community.mysql.mysql_replication:
@@ -26,6 +22,7 @@
     primary_host: "{{ groups['lv_db'][0] }}"
     primary_user: 'slave'
     primary_password: "{{ database_slave_password }}"
+  when: "replication_status.Slave_IO_Running != 'Yes'"
 
 - name: Start server as slave
   become: true
@@ -33,3 +30,4 @@
     login_unix_socket: /var/run/mysqld/mysqld.sock
     mode: startreplica
     connection_name: primary-1
+  when: "replication_status.Slave_IO_Running != 'Yes'"
