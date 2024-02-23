@@ -30,4 +30,4 @@
     login_unix_socket: /var/run/mysqld/mysqld.sock
     mode: startreplica
     connection_name: primary-1
-  when: "replication_status.Slave_IO_Running != 'Yes'"
+  when: "replication_status.Slave_IO_Running is not defined"
