@@ -28,9 +28,9 @@ pipeline {
         }
 
         stage('Setup database') {
-//             when {
-//                  expression { params.INFRASTRUCTURE_UPDATE == 'TRUE' }
-//             }
+             when {
+                 expression { params.INFRASTRUCTURE_UPDATE == 'TRUE' }
+             }
             steps {
                 ansiblePlaybook(
                         playbook: 'database.yml',
