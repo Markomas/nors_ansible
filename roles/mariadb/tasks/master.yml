@@ -8,13 +8,6 @@
     state: present
     host: '{{ database_slave_host }}'
 
-- name: Create news database
-  become: true
-  ansible.builtin.mysql_db:
-    login_unix_socket: /run/mysqld/mysqld.sock
-    name: news
-    state: present
-
 - name: Add 60-as-master.cnf to mariadb
   become: true
   ansible.builtin.template:
