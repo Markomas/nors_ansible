@@ -36,6 +36,16 @@
     state: present
     host: '{{ database_markom_host }}'
 
+- name: Add markom user to mariadb server
+  become: true
+  ansible.builtin.mysql_user:
+    login_unix_socket: /run/mysqld/mysqld.sock
+    name: markom
+    password: '{{ database_markom_password }}'
+    priv: '*.*:ALL'
+    state: present
+    host: '{{ database_markom_host_vpn }}'
+
 - name: Change mysql to allow remote connections
   become: true
   lineinfile:
