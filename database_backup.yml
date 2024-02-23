@@ -1,1 +1,4 @@
-- hosts: lv_db
+- hosts: lv_db_slave
+  tasks:
+    - name: Check slave for replication issues
+

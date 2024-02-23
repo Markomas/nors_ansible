@@ -11,5 +11,16 @@ pipeline {
                 copyArtifacts filter: 'nors_news_ansible_inventory.yml', fingerprintArtifacts: true, projectName: env.TERRAFORM_JOB_NAME
             }
         }
+
+        stage('Backup database') {
+            steps {
+                ansiblePlaybook(
+                        playbook: 'database_backup.yml',
+                        inventory: 'nors_news_ansible_inventory.yml',
+                        credentialsId: 'jenkins_agent',
+                        colorized: true
+                        )
+            }
+        }
     }
 }
