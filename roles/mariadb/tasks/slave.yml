@@ -22,7 +22,7 @@
     primary_host: "{{ groups['lv_db'][0] }}"
     primary_user: 'slave'
     primary_password: "{{ database_slave_password }}"
-  when: "replication_status.Slave_IO_Running != 'Yes'"
+  when: "replication_status.Slave_IO_Running is not defined"
 
 - name: Start server as slave
   become: true
