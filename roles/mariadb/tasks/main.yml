@@ -18,7 +18,7 @@
 
 - name: Add news user to mariadb server
   become: true
-  community.mysql.mysql_user:
+  ansible.builtin.mysql_user:
     login_unix_socket: /run/mysqld/mysqld.sock
     name: news
     password: '{{ database_news_password }}'
