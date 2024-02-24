@@ -10,8 +10,8 @@
         name: dummy_color
         color: "{{ color.stdout }}"
 
-- import_playbook: webserver_blue.yml
+- import_playbook: webserver_switch_to_blue.yml
   when: "'green' in hostvars['dummy_color']['color']"
 
-- import_playbook: webserver_green.yml
+- import_playbook: webserver_switch_to_green.yml
   when: "'green' not in hostvars['dummy_color']['color']"

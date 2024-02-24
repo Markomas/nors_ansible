@@ -1,1 +1,14 @@
-- name:
+- name: "Dump current state of all databases"
+  become: true
+  mysql_db:
+    login_unix_socket: /run/mysqld/mysqld.sock
+    state: dump
+    name: all
+    target: /tmp/dump.sql.gz
+
+- name: "Download dump file from remote to local"
+  become: true
+  fetch:
+    src: /tmp/dump.sql.gz
+    dest: ./jenkins/backup/dump.sql.gz
+    flat: yes

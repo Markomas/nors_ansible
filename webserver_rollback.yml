@@ -17,4 +17,3 @@
       vars:
         color: "green"
       when: "'green' not in color_bluegreen.stdout"
-

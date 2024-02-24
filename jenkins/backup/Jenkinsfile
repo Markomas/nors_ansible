@@ -22,5 +22,21 @@ pipeline {
                         )
             }
         }
+
+        stage('Upload dump to backup') {
+            steps {
+                ftpPublisher alwaysPublishFromMaster: true, masterNodeName: '', paramPublish: [parameterName:""], continueOnError: false, failOnError: false, publishers: [
+                    [configName: 'bubilas', transfers: [
+                        [asciiMode: false, cleanRemote: false, excludes: '', flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory:'database_backup_news', remoteDirectorySDF: false, removePrefix: '', sourceFiles: 'jenkins/backup/*.sql.gz']
+                    ], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: true]
+                ]
+            }
+        }
+
+        stage('Save artefacts') {
+            steps {
+                archiveArtifacts(artifacts: 'jenkins/backup/dump.sql.gz', fingerprint: true, onlyIfSuccessful: true)
+            }
+        }
     }
 }
