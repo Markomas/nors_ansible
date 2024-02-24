@@ -1,0 +1,17 @@
+- hosts: lv_load_balancer
+  tasks:
+    - name: Get current load balancer color
+      shell: "cat /bluegreen.map"
+      register: color
+      ignore_errors: True
+
+    - name: Add dummy host for color
+      add_host:
+        name: dummy_color
+        color: "{{ color.stdout }}"
+
+- import_playbook: webserver_switch_to_blue.yml
+  when: "'green' in hostvars['dummy_color']['color']"
+
+- import_playbook: webserver_switch_to_green.yml
+  when: "'green' not in hostvars['dummy_color']['color']"
