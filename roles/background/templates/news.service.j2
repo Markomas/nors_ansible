@@ -1,0 +1,14 @@
+[Unit]
+Description=News background crawler
+After=network.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=120
+User=www-data
+ExecStart=/usr/bin/env /usr/bin/php /var/www/bin/console app:test -e prod
+
+[Install]
+WantedBy=multi-user.target

@@ -1,3 +1,21 @@
 - name: Deploy background
   debug:
     msg: Placeholder
+
+- name: Upload news.service.j2 template to remote server
+  template:
+    src: news.service.j2
+    dest: /etc/systemd/system/news.service
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Reload systemctl
+  systemd:
+    daemon_reload: yes
+
+- name: Enable news.service
+  systemd:
+    name: news.service
+    state: started
+    enabled: yes
