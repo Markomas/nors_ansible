@@ -1,8 +1,5 @@
-- name: Deploy background
-  debug:
-    msg: Placeholder
-
 - name: Upload news.service.j2 template to remote server
+  become: true
   template:
     src: news.service.j2
     dest: /etc/systemd/system/news.service
@@ -11,10 +8,12 @@
     mode: 0644
 
 - name: Reload systemctl
+  become: true
   systemd:
     daemon_reload: yes
 
 - name: Enable news.service
+  become: true
   systemd:
     name: news.service
     state: started
