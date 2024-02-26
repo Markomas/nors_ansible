@@ -24,7 +24,10 @@ pipeline {
                     playbook: 'webserver_deploy.yml',
                     inventory: 'nors_news_ansible_inventory.yml',
                     credentialsId: 'jenkins_agent',
-                    colorized: true
+                    colorized: true,
+                    extraVars: [
+                        deployment_zip_path: 'nors_news.zip'
+                    ]
                 )
             }
         }
