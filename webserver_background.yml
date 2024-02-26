@@ -1,4 +1,4 @@
-- hosts: blue_lv_app
+- hosts: background_lv_app
   roles:
     - deploy
     - background
