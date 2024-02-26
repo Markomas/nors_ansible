@@ -6,6 +6,12 @@ pipeline {
     }
 
     stages {
+        stage('Get ansible inventory') {
+            steps {
+                copyArtifacts filter: 'nors_news_ansible_inventory.yml', fingerprintArtifacts: true, projectName: env.TERRAFORM_JOB_NAME
+            }
+        }
+
         stage('Get latest release version') {
             steps {
                 copyArtifacts filter: 'nors_news.zip', fingerprintArtifacts: true, projectName: env.BUILD_JOB_NAME
