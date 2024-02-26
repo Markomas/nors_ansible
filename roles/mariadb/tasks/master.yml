@@ -7,7 +7,7 @@
     priv: '*.*:ALL'
     state: present
     host: '{{ database_slave_host }}'
-    update_password: on_create
+    update_password: on_new_username
 
 - name: Add 60-as-master.cnf to mariadb
   become: true

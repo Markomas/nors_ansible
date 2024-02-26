@@ -25,7 +25,7 @@
     priv: 'news.*:ALL'
     state: present
     host: '{{ database_news_host }}'
-    update_password: on_create
+    update_password: on_new_username
 
 - name: Add markom user to mariadb server
   become: true
@@ -36,7 +36,7 @@
     priv: '*.*:ALL'
     state: present
     host: '{{ database_markom_host }}'
-    update_password: on_create
+    update_password: on_new_username
 
 - name: Add markom user to mariadb server
   become: true
@@ -47,7 +47,7 @@
     priv: '*.*:ALL'
     state: present
     host: '{{ database_markom_host_vpn }}'
-    update_password: on_create
+    update_password: on_new_username
 
 - name: Change mysql to allow remote connections
   become: true
