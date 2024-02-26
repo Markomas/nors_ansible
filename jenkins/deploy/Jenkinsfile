@@ -1,0 +1,26 @@
+pipeline {
+    agent any
+
+    options {
+       ansiColor('xterm')
+    }
+
+    stages {
+        stage('Get latest release version') {
+            steps {
+                copyArtifacts filter: 'nors_news.zip', fingerprintArtifacts: true, projectName: env.BUILD_JOB_NAME
+            }
+        }
+
+        stage('Deploy release to app servers') {
+            steps {
+                ansiblePlaybook(
+                    playbook: 'webserver_deploy.yml',
+                    inventory: 'nors_news_ansible_inventory.yml',
+                    credentialsId: 'jenkins_agent',
+                    colorized: true
+                )
+            }
+        }
+    }
+}
