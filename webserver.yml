@@ -1,4 +1,6 @@
-- hosts: prod_app
+- hosts:
+    - prod_app
+    - background_lv_app
   roles:
     - php
     - nginx
