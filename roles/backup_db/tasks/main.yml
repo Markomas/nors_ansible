@@ -1,3 +1,15 @@
+- name: Get replication status
+  become: true
+  community.mysql.mysql_replication:
+    login_unix_socket: /run/mysqld/mysqld.sock
+    mode: getreplica
+  register: replication
+
+- name: Check replication status
+  ansible.builtin.fail:
+    msg: Replication not running
+  when: replication.Slave_IO_Running != "Yes" or replication.Slave_SQL_Running != "Yes"
+
 - name: "Dump current state of all databases"
   become: true
   mysql_db:
@@ -12,3 +24,4 @@
     src: /tmp/dump.sql.gz
     dest: ./jenkins/backup/dump.sql.gz
     flat: yes
+
