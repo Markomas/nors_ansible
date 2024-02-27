@@ -1,8 +1,26 @@
-- name: Upload news.service.j2 template to remote server
+- name: Upload news_run.service.j2 template to remote server
   become: true
   template:
-    src: news.service.j2
-    dest: /etc/systemd/system/news.service
+    src: news_run.service.j2
+    dest: /etc/systemd/system/news_run.service
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Upload news_sitemap.service.j2 template to remote server
+  become: true
+  template:
+    src: news_sitemap.service.j2
+    dest: /etc/systemd/system/news_sitemap.service
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Upload news_scrap.service.j2 template to remote server
+  become: true
+  template:
+    src: news_scrap.service.j2
+    dest: /etc/systemd/system/news_scrap.service
     owner: root
     group: root
     mode: 0644
@@ -12,9 +30,23 @@
   systemd:
     daemon_reload: yes
 
-- name: Enable news.service
+- name: Enable news_run.service
   become: true
   systemd:
-    name: news.service
+    name: news_run.service
+    state: started
+    enabled: yes
+
+- name: Enable news_sitemap.service
+  become: true
+  systemd:
+    name: news_sitemap.service
+    state: started
+    enabled: yes
+
+- name: Enable news_scrap.service
+  become: true
+  systemd:
+    name: news_scrap.service
     state: started
     enabled: yes

@@ -1,0 +1,14 @@
+[Unit]
+Description=News background scrap by sitemap slow af
+After=network.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=5
+User=www-data
+ExecStart=/usr/bin/env /usr/bin/php /var/www/bin/console app:scrap -e prod
+
+[Install]
+WantedBy=multi-user.target

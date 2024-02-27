@@ -1,14 +1,14 @@
 [Unit]
-Description=News background crawler
+Description=News background sitemap sync
 After=network.target
 StartLimitIntervalSec=0
 
 [Service]
 Type=simple
 Restart=always
-RestartSec=120
+RestartSec=3600
 User=www-data
-ExecStart=/usr/bin/env /usr/bin/php /var/www/bin/console app:test -e prod
+ExecStart=/usr/bin/env /usr/bin/php /var/www/bin/console app:sitemap -e prod
 
 [Install]
 WantedBy=multi-user.target
