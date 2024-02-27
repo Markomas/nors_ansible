@@ -34,15 +34,17 @@ pipeline {
 
         stage('Deploy release to background servers') {
             steps {
-                ansiblePlaybook(
-                    playbook: 'webserver_background.yml',
-                    inventory: 'nors_news_ansible_inventory.yml',
-                    credentialsId: 'jenkins_agent',
-                    colorized: true,
-                    extraVars: [
-                        deployment_zip_path: 'nors_news.zip'
-                    ]
-                )
+                withCredentials([string(credentialsId: 'news_cookies', variable: 'COOKIES_CONTENTS')]) {
+                    ansiblePlaybook(
+                        playbook: 'webserver_background.yml',
+                        inventory: 'nors_news_ansible_inventory.yml',
+                        credentialsId: 'jenkins_agent',
+                        colorized: true,
+                        extraVars: [
+                            deployment_zip_path: 'nors_news.zip'
+                        ]
+                    )
+                }
             }
         }
     }
