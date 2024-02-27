@@ -2,3 +2,5 @@
   roles:
     - deploy
     - background
+  vars:
+    cookies: "{{ lookup('ansible.builtin.env', 'COOKIES_CONTENTS') }}"

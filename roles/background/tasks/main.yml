@@ -1,3 +1,5 @@
+- include_tasks: secret.yml
+
 - name: Upload news_run.service.j2 template to remote server
   become: true
   template:
