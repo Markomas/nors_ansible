@@ -34,7 +34,8 @@ pipeline {
 
         stage('Deploy release to background servers') {
             steps {
-                withCredentials([string(credentialsId: 'news_cookies', variable: 'COOKIES_CONTENTS')]) {
+                withCredentials([file(credentialsId: 'news_cookies', variable: 'COOKIES_FILE')]) {
+
                     ansiblePlaybook(
                         playbook: 'webserver_background.yml',
                         inventory: 'nors_news_ansible_inventory.yml',

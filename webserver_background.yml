@@ -3,4 +3,4 @@
     - deploy
     - background
   vars:
-    cookies: "{{ lookup('ansible.builtin.env', 'COOKIES_CONTENTS') }}"
+    cookies: "{{ lookup('ansible.builtin.env', 'COOKIES_FILE') }}"
