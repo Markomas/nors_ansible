@@ -36,19 +36,19 @@
   become: true
   systemd:
     name: news_run.service
-    state: started
+    state: restarted
     enabled: yes
 
 - name: Enable news_sitemap.service
   become: true
   systemd:
     name: news_sitemap.service
-    state: started
+    state: restarted
     enabled: yes
 
 - name: Enable news_scrap.service
   become: true
   systemd:
     name: news_scrap.service
-    state: started
+    state: restarted
     enabled: yes
