@@ -1,3 +1,7 @@
+log_format combined_realip '$http_x_forwarded_for - $remote_user [$time_local] '
+                    '"$request" $status $body_bytes_sent '
+                    '"$http_referer" "$http_user_agent"';
+
 server {
     #server_name example.com www.example.com;
     root /var/www/public;
@@ -54,5 +58,5 @@ server {
     }
 
     error_log /var/log/nginx/news_error.log;
-    access_log /var/log/nginx/news_access.log;
+    access_log /var/log/nginx/news_access.log combined_realip;
 }

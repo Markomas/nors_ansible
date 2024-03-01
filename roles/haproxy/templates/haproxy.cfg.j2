@@ -15,11 +15,13 @@ frontend myfrontend
   use_backend %[str(active),map(/bluegreen.map)]
 
 backend lv_app_blue
+o   ption forwardfor if-none
     {% for ip in groups['blue_lv_app'] %}
     server server{{loop.index}} {{ ip }}:80 check
     {% endfor %}
 
 backend lv_app_green
+    option forwardfor if-none
     {% for ip in groups['green_lv_app'] %}
     server server{{loop.index}} {{ ip }}:80 check
     {% endfor %}
