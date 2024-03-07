@@ -48,5 +48,19 @@ pipeline {
                 }
             }
         }
+
+        stage('Deploy release to tor servers') {
+            steps {
+                withCredentials([file(credentialsId: 'tor_key', variable: 'TOR_KEY')]) {
+
+                    ansiblePlaybook(
+                        playbook: 'webserver_tor.yml',
+                        inventory: 'nors_news_ansible_inventory.yml',
+                        credentialsId: 'jenkins_agent',
+                        colorized: true
+                    )
+                }
+            }
+        }
     }
 }

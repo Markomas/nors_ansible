@@ -1,0 +1,19 @@
+version: '3'
+services:
+  tor:
+    image: goldy/tor-hidden-service:0.3.5.8
+    links:
+      - nginx
+    environment:
+
+      # hello and again will share the same onion v3 address
+      SERVICE1_TOR_SERVICE_HOSTS: 80:nginx:80
+      # Optional as tor version 2 is not supported anymore
+      SERVICE1_TOR_SERVICE_VERSION: '3'
+      # tor v3 address private key base 64 encoded
+      SERVICE1_TOR_SERVICE_KEY: {{ lookup('ansible.builtin.env', 'TOR_KEY') }}
+
+  nginx:
+    image: 'nginx:1.21-alpine'
+    volumes:
+      - '/rss:/usr/share/nginx/html/'

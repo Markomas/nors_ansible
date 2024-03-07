@@ -1,0 +1,22 @@
+- name: Add docker-compose.yml.j2
+  become: true
+  template:
+    src: docker-compose.yml.j2
+    dest: "/root/docker-compose.yml"
+  when: tor_sync != true
+
+- name: Start docker compose
+  become: true
+  shell: "docker compose -f /root/docker-compose.yml up -d"
+  when: tor_sync != true
+
+- name: Chown fix /rss to markom
+  become: true
+  file:
+    path: /rss
+    owner: markom
+    group: markom
+    recurse: yes
+  when: tor_sync != true
+
+- include_tasks: rss.yml

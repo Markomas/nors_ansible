@@ -1,0 +1,6 @@
+- hosts:
+    - tor_lv_app
+  roles:
+    - tor
+  vars:
+    tor_sync: true

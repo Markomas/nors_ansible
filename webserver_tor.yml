@@ -1,0 +1,5 @@
+- hosts:
+    - tor_lv_app
+  roles:
+    - docker
+    - tor

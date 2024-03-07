@@ -1,0 +1,26 @@
+- name: 'Download rss list'
+  get_url:
+    url: 'http://192.168.3.1/site/15min.lt/rss'
+    dest: '/rss/15min'
+    mode: '0644'
+
+- name: 'Download rss list'
+  get_url:
+    url: 'http://192.168.3.1/site/delfi.lt/rss'
+    dest: '/rss/delfi'
+    mode: '0644'
+
+- name: 'Download rss list'
+  get_url:
+    url: 'http://192.168.3.1/site/lrytas.lt/rss'
+    dest: '/rss/lrytas'
+    mode: '0644'
+
+- name: 'Download rss list'
+  get_url:
+    url: 'http://192.168.3.1/site/lrt.lt/rss'
+    dest: '/rss/lrt'
+    mode: '0644'
+
+
+

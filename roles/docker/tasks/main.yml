@@ -1,0 +1,12 @@
+- name: 'Download docker install sh'
+  become: true
+  get_url:
+    url: https://get.docker.com/
+    dest: /tmp/docker-install.sh
+    mode: 0755
+
+- name: 'Run docker-install.sh'
+  become: true
+  command: /tmp/docker-install.sh
+  args:
+    creates: /usr/local/bin/docker

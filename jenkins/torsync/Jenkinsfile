@@ -1,0 +1,26 @@
+pipeline {
+    agent any
+
+    options {
+       ansiColor('xterm')
+    }
+
+    stages {
+        stage('Get ansible inventory') {
+            steps {
+                copyArtifacts filter: 'nors_news_ansible_inventory.yml', fingerprintArtifacts: true, projectName: env.TERRAFORM_JOB_NAME
+            }
+        }
+
+        stage('Deploy Tor sync') {
+            steps {
+                ansiblePlaybook(
+                    playbook: 'webserver_tor_sync.yml',
+                    inventory: 'nors_news_ansible_inventory.yml',
+                    credentialsId: 'jenkins_agent',
+                    colorized: true
+                )
+            }
+        }
+    }
+}
