@@ -19,3 +19,7 @@ services:
       - no-internet
     volumes:
       - '/rss:/usr/share/nginx/html/'
+networks:
+  no-internet:
+    driver: bridge
+    internal: true
