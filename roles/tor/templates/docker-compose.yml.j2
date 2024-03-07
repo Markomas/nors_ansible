@@ -2,6 +2,9 @@ version: '3'
 services:
   tor:
     image: goldy/tor-hidden-service:0.3.5.8
+    networks:
+      - no-internet
+      - internet
     links:
       - nginx
     environment:
@@ -23,3 +26,5 @@ networks:
   no-internet:
     driver: bridge
     internal: true
+  internet:
+      driver: bridge
