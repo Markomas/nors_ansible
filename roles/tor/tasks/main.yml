@@ -14,9 +14,8 @@
   become: true
   file:
     path: /rss
-    owner: markom
-    group: markom
+    owner: jenkins
+    group: jenkins
     recurse: yes
-  when: tor_sync != true
 
 - include_tasks: rss.yml
