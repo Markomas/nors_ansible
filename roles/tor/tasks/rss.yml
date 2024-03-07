@@ -22,5 +22,10 @@
     dest: '/rss/lrt'
     mode: '0644'
 
+- name: 'Download rss list'
+  get_url:
+    url: 'http://192.168.3.1/site/all/rss'
+    dest: '/rss/all'
+    mode: '0644'
 
 
