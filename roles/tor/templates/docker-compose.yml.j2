@@ -15,5 +15,7 @@ services:
 
   nginx:
     image: 'nginx:1.21-alpine'
+    networks:
+      - no-internet
     volumes:
       - '/rss:/usr/share/nginx/html/'
